@@ -26,11 +26,11 @@ Thank you for your interest in contributing to Agent Skills! This repository con
 
 ## Code Standards
 
-- Keep each skill in its own directory with a `SKILL.md` file.
+- Keep each skill in its own directory under `skills/`, with a `SKILL.md` file.
 - Give every skill valid `name` and `description` frontmatter.
 - Update `README.md` when adding or removing a skill.
 - Keep skill instructions focused, actionable, and independent of this repository's local machine.
-- Follow the commit message conventions in [`commit-messages/SKILL.md`](commit-messages/SKILL.md).
+- Follow the commit message conventions in [`skills/commit-messages/SKILL.md`](skills/commit-messages/SKILL.md).
 
 ## Testing
 
@@ -59,8 +59,9 @@ There is no build step. The repository is consumed as a collection of Markdown s
 
 ## Project Structure
 
-- `comments/SKILL.md` — code commenting and function documentation guidance.
-- `commit-messages/SKILL.md` — commit message conventions.
+- `skills/comments/SKILL.md` — code commenting and function documentation guidance.
+- `skills/commit-messages/SKILL.md` — commit message conventions.
+- `skills/contributing/SKILL.md` — contribution documentation guidance.
 - `scripts/validate_skills.py` — dependency-free skill and README validator.
 - `.github/workflows/validate.yml` — automated validation for pushes and pull requests.
 - `README.md` — installation and user-facing usage guidance.

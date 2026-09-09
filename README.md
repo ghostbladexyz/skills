@@ -4,14 +4,15 @@ Reusable skill instructions for coding agents.
 
 ## Included skills
 
-- [`comments/SKILL.md`](comments/SKILL.md) — guidelines for useful code comments and function documentation.
-- [`commit-messages/SKILL.md`](commit-messages/SKILL.md) — conventions for writing commit messages.
+- [`skills/comments/SKILL.md`](skills/comments/SKILL.md) — guidelines for useful code comments and function documentation.
+- [`skills/commit-messages/SKILL.md`](skills/commit-messages/SKILL.md) — conventions for writing commit messages.
+- [`skills/contributing/SKILL.md`](skills/contributing/SKILL.md) — guidelines for creating contribution documentation.
 
 ## Use these skills with an agent
 
 1. Clone or copy this repository into a location available to the agent.
-2. Configure the agent's skill loader to discover the `comments` and `commit-messages` directories, or copy those directories into the agent's local skills directory.
-3. Load `comments/SKILL.md` when generating or refactoring code, and load `commit-messages/SKILL.md` when creating or reviewing commit messages.
+2. Configure the agent's skill loader to discover the `skills/` directory, or copy the skill directories inside it into the agent's local skills directory.
+3. Load `skills/comments/SKILL.md` when generating or refactoring code, `skills/commit-messages/SKILL.md` when creating or reviewing commit messages, and `skills/contributing/SKILL.md` when creating contribution guidelines.
 
 ### Install with the skills CLI
 

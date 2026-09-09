@@ -9,15 +9,16 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SKILLS_ROOT = ROOT / "skills"
 README_PATH = ROOT / "README.md"
 SKILL_LINK_PATTERN = re.compile(r"\]\(([^)]+/SKILL\.md)\)")
 
 
-def discover_skill_files(root: Path) -> list[Path]:
-    """discover_skill_files returns every top-level skill file for validation."""
+def discover_skill_files(skills_root: Path) -> list[Path]:
+    """discover_skill_files returns every skill file under the repository skill directory."""
     return sorted(
         skill_file
-        for directory in root.iterdir()
+        for directory in skills_root.iterdir()
         if directory.is_dir() and not directory.name.startswith(".")
         for skill_file in [directory / "SKILL.md"]
         if skill_file.is_file()
@@ -43,12 +44,15 @@ def read_frontmatter(skill_file: Path) -> dict[str, str]:
     return metadata
 
 
-def validate_skills(root: Path, readme_path: Path) -> list[str]:
+def validate_skills(root: Path, skills_root: Path, readme_path: Path) -> list[str]:
     """validate_skills checks metadata, duplicate names, and README skill links."""
     errors: list[str] = []
-    skill_files = discover_skill_files(root)
+    if not skills_root.is_dir():
+        return ["skills/: directory not found"]
+
+    skill_files = discover_skill_files(skills_root)
     if not skill_files:
-        errors.append("no top-level SKILL.md files found")
+        errors.append("no skills/*/SKILL.md files found")
 
     names: dict[str, Path] = {}
     for skill_file in skill_files:
@@ -88,7 +92,7 @@ def validate_skills(root: Path, readme_path: Path) -> list[str]:
 
 def main() -> int:
     """main validates the repository and returns a process status for CI or local use."""
-    errors = validate_skills(ROOT, README_PATH)
+    errors = validate_skills(ROOT, SKILLS_ROOT, README_PATH)
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)

@@ -4,7 +4,7 @@ This repository stores reusable skill instructions for coding agents.
 
 ## Repository rules
 
-- Keep one skill per top-level directory, with its instructions in `SKILL.md`.
+- Keep one skill per directory under root `skills/`, with its instructions in `SKILL.md`.
 - Treat each skill's frontmatter and body as the authority for that skill's behavior.
 - Update `README.md` when the available skills or installation instructions change.
 - Keep contributor workflow in `CONTRIBUTING.md`; do not duplicate it here.
@@ -13,7 +13,7 @@ This repository stores reusable skill instructions for coding agents.
 
 ## Adding a skill
 
-1. Create a directory with a `SKILL.md` file.
+1. Create a directory under `skills/` with a `SKILL.md` file.
 2. Add valid `name` and `description` frontmatter.
-3. Add the skill to the README's included-skills list.
+3. Add the `skills/<skill-name>/SKILL.md` path to the README's included-skills list.
 4. Run the validator and review the full diff.
