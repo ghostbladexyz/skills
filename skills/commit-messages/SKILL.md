@@ -10,6 +10,14 @@ description: Generate commit messages following our team's conventions. Use when
 
 Format: `type(scope): description` when the change has a specific path scope, otherwise `type: description`.
 
+Every commit message must include a body after a blank line. Write one or two concise sentences in simple English that say what the change implements and why it matters. Do not repeat the subject or rely on unexplained jargon. Describe the actual result; do not claim benefits the change does not provide.
+
+```text
+feat(auth/password-reset.ts): send reset links by email
+
+Email a one-time link so users can set a new password without contacting support.
+```
+
 ## Types
 
 | Type | Description | Version Bump |
