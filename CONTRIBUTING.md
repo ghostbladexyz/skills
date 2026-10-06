@@ -63,6 +63,7 @@ There is no build step. The repository is consumed as a collection of Markdown s
 - `skills/commit-messages/SKILL.md` — commit message conventions.
 - `skills/contributing/SKILL.md` — contribution documentation guidance.
 - `skills/frontend-design/SKILL.md` — frontend design guidance; its Apache 2.0 terms are in the sibling `LICENSE.txt`.
+- `skills/generate-book/SKILL.md` and its sibling folders — HTML learning-book guidance and supporting resources.
 - `scripts/validate_skills.py` — dependency-free skill and README validator.
 - `.github/workflows/validate.yml` — automated validation for pushes and pull requests.
 - `README.md` — installation and user-facing usage guidance.

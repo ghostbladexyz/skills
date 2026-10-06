@@ -1,0 +1,3 @@
+interface:
+  display_name: "Generate Book"
+  short_description: "Create an original project guide in HTML"

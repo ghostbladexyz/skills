@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code with expandable context</title>
+<style>
+  :root { color-scheme: dark; --page: #15191f; --code: #1d2229; --text: #eef0f3; --muted: #b6c0cd; --accent: #8bbbea; }
+  body { max-width: 850px; margin: 48px auto; padding: 0 20px; background: var(--page); color: var(--text); font: 20px/1.6 system-ui, sans-serif; }
+  h1 { font-size: 1.6em; }
+  figure { margin: 28px 0; }
+  figcaption { margin-bottom: 8px; color: var(--muted); font-size: .85em; }
+  .code-surface { display: flex; align-items: flex-start; background: var(--code); border-radius: 5px; }
+  .code-surface pre { flex: 1; min-width: 0; margin: 0; padding: 16px 20px; overflow-x: auto; line-height: 1.5; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  code { font: .9em/1.5 Consolas, monospace; }
+  .code-tools { order: 1; flex: none; margin: 10px 10px 0 0; display: flex; gap: 6px; }
+  button { min-width: 38px; min-height: 36px; border: 1px solid #718095; border-radius: 4px; padding: 6px; background: var(--code); color: var(--muted); cursor: pointer; }
+  button:hover, button[aria-expanded="true"] { color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  svg { display: block; width: 22px; height: 22px; }
+  [hidden] { display: none !important; }
+  .context-lines { opacity: .72; }
+  .snip { color: var(--muted); }
+  .code-status { min-height: 1.5em; margin: 4px 0 0; color: var(--muted); font-size: .8em; }
+  @media print {
+    :root { color-scheme: light; }
+    body, .code-surface { background: white; color: black; }
+    .code-surface { display: block; }
+    .code-tools, .code-status, .snip { display: none !important; }
+    .context-lines[hidden] { display: inline !important; }
+    .context-lines { opacity: 1; }
+    figcaption { color: black; }
+    pre { padding: 12px; white-space: pre-wrap; }
+  }
+</style>
+<h1>Keep the important lines in view</h1>
+<p>When parsing fails, <code>continue</code> skips the rest of that iteration. Use the eye button to see the surrounding code.</p>
+
+<figure class="code-listing">
+  <figcaption>retry_demo.rs · Focused excerpt · Book-only example</figcaption>
+  <div class="code-surface">
+    <div class="code-tools" hidden>
+      <button type="button" class="copy-code" aria-label="Copy full code" title="Copy full code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 8h12v13H8zM4 16V3h12v2"/></svg>
+      </button>
+      <button type="button" class="toggle-context" aria-expanded="true" aria-controls="retry-source" aria-label="Hide surrounding code" title="Hide surrounding code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <pre id="retry-source"><code class="language-rust"><span data-source>fn main() {
+</span><span class="snip" hidden>    // --snip--
+</span><span class="context-lines" data-source>    let inputs = ["18", "oops", "27"];
+
+</span><span data-source>    for input in inputs {
+        let number = match input.parse::&lt;u32&gt;() {
+            Ok(number) =&gt; number,
+            Err(_) =&gt; continue,
+        };
+</span><span class="snip" hidden>        // --snip--
+</span><span class="context-lines" data-source>
+        println!("Accepted: {number}");
+</span><span data-source>    }
+}
+</span></code></pre>
+  </div>
+  <p class="code-status" role="status"></p>
+</figure>
+
+<p>The error branch skips the acceptance message. The loop then takes the next input. Showing more code changes the view; it does not change the program.</p>
+
+<figure class="code-listing">
+  <figcaption>counter_demo.rs · Focused excerpt · Book-only example</figcaption>
+  <div class="code-surface">
+    <div class="code-tools" hidden>
+      <button type="button" class="copy-code" aria-label="Copy full code" title="Copy full code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 8h12v13H8zM4 16V3h12v2"/></svg>
+      </button>
+      <button type="button" class="toggle-context" aria-expanded="true" aria-controls="counter-source" aria-label="Hide surrounding code" title="Hide surrounding code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <pre id="counter-source"><code class="language-rust"><span data-source>fn main() {
+</span><span class="snip" hidden>    // --snip--
+</span><span class="context-lines" data-source>    let mut count = 0;
+    let values = [true, false, true];
+
+</span><span data-source>    for pending in values {
+        if pending {
+            count += 1;
+        }
+    }
+</span><span class="snip" hidden>    // --snip--
+</span><span class="context-lines" data-source>
+    println!("Still waiting: {count}");
+    assert_eq!(count, 2);
+</span><span data-source>}
+</span></code></pre>
+  </div>
+  <p class="code-status" role="status"></p>
+</figure>
+
+<script>
+  for (const listing of document.querySelectorAll('.code-listing')) {
+    const button = listing.querySelector('.toggle-context');
+    const code = listing.querySelector('code');
+    const status = listing.querySelector('.code-status');
+    const setExpanded = expanded => {
+      for (const block of listing.querySelectorAll('.context-lines')) block.hidden = !expanded;
+      for (const marker of listing.querySelectorAll('.snip')) marker.hidden = expanded;
+      button.setAttribute('aria-expanded', String(expanded));
+      const label = expanded ? 'Hide surrounding code' : 'Show surrounding code';
+      button.setAttribute('aria-label', label);
+      button.title = label;
+    };
+    button.addEventListener('click', () => setExpanded(button.getAttribute('aria-expanded') !== 'true'));
+    listing.querySelector('.copy-code').addEventListener('click', async () => {
+      const source = [...code.querySelectorAll('[data-source]')].map(block => block.textContent).join('');
+      try {
+        await navigator.clipboard.writeText(source);
+        status.textContent = 'Full code copied.';
+      } catch {
+        status.textContent = 'Copy is unavailable. Show the surrounding code, then select and copy it.';
+      }
+    });
+    setExpanded(false);
+    listing.querySelector('.code-tools').hidden = false;
+  }
+</script>
+</html>
